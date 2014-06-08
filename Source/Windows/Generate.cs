@@ -96,6 +96,10 @@ namespace PGPSteam
                 key.Encode(publicOut);
 
                 pubOut.Close();
+
+                // write decrypt comparison
+                PGPLib lib = new PGPLib(File.ReadAllText("key_local/public.key"), File.ReadAllText("key_local/private.key"), gen.Passphrase);
+                File.WriteAllText("key_local/validation.bin", lib.Encrypt("PGPSteam"));
                 return true;
             }
         }

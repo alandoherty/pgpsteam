@@ -258,8 +258,21 @@ namespace PGPSteam
         /// </summary>
         public void Run()
         {
+            // ask for passphrase
+            String passphrase = Login.LoginKeypair();
+
+            // check valid
+            if (passphrase == null)
+            {
+                Environment.Exit(0);
+                return;
+            }
+
+            // test decrypt
+
+
             // load pgp stuff
-            m_PGP = new PGPLib(PublicKey, PrivateKey);
+            m_PGP = new PGPLib(PublicKey, PrivateKey, passphrase);
 
             // init steamworks stuff
             Init();
@@ -452,20 +465,32 @@ namespace PGPSteam
                                     break;
                                 }
                                 
-                                
-                                if (m_ChatWindows.ContainsKey((CSteamID)chatMsg.m_ulSender))
+                                if (m_ChatWindows.ContainsKey(sender))
                                 {
+                                    // decode
+                                    msg = m_PGP.Decrypt(msg);
+
                                     // inject chat message
-                                    m_ChatWindows[(CSteamID)chatMsg.m_ulSender].Message(msg);
+                                    m_ChatWindows[sender].Message(msg);
                                 }
                                 else
                                 {
+                                    // check has key
+                                    if (!HasPublicKey(sender))
+                                    {
+                                        break;
+                                    }
+
                                     // open chat window
                                     Chat(sender);
 
                                     // inject chat message
                                     if (m_ChatWindows.ContainsKey(sender))
                                     {
+                                        // decode
+                                        msg = m_PGP.Decrypt(msg);
+
+                                        // inject chat message
                                         m_ChatWindows[sender].Message(msg);
                                     }
                                 }
