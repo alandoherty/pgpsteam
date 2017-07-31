@@ -56,10 +56,6 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="BouncyCastle.Crypto, Version=1.7.4114.6375, Culture=neutral, PublicKeyToken=0e99375e54769942">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>.\BouncyCastle.Crypto.dll</HintPath>
-    </Reference>
     <Reference Include="Steam4NET, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>Libs\Steam4NET.dll</HintPath>
@@ -135,7 +131,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Libs\BouncyCastle.Crypto.dll" />
     <Content Include="Libs\Steam4NET.dll" />
   </ItemGroup>
   <ItemGroup />
